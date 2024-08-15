@@ -1,7 +1,7 @@
 var resolution = 512;
 
 var ground = [];
-var groundSegments = 50;
+var groundSegments = 20;
 var spacing = resolution / (groundSegments);
 
 var spider = [];
@@ -64,6 +64,7 @@ function draw() {
             Math.pow(ground[i].x_end - spider[0].x, 2) +
             Math.pow(ground[i].y_end - spider[0].y, 2)
         );
+
 
         var closest1WasSet = false;
         var closest2WasSet = false;
