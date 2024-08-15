@@ -1,7 +1,8 @@
 var resolution = 512;
 
 var ground = [];
-var spacing = resolution / (30);
+var groundSegments = 50;
+var spacing = resolution / (groundSegments);
 
 var spider = [];
 
@@ -27,7 +28,7 @@ function setup() {
     var canvas = createCanvas(resolution, resolution);
     canvas.parent('sketch-holder');
 
-    for (let i = 0; i < 32; i++) {
+    for (let i = 0; i < groundSegments + 2; i++) {
         ground.push(new create_ground(spacing * i, 1000, randomInt(resolution - 100, resolution - 50), randomInt(resolution - 100, resolution - 50)));
     }
 
@@ -44,11 +45,11 @@ function draw() {
     let closest1;
     let closest2;
     let closest3;
-    let minDistance1 = 1000;
-    let minDistance2 = 1000;
-    let minDistance3 = 1000;
+    let minDistance1 = 200;
+    let minDistance2 = 200;
+    let minDistance3 = 200;
 
-    for (let i = 0; i < 32; i++) {
+    for (let i = 0; i < groundSegments + 2; i++) {
         stroke(color(137, 207, 240), 0, 0);
         strokeWeight(ground[i].width);
 
