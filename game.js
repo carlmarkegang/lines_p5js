@@ -1,7 +1,7 @@
 var resolution = 512;
 
 var ground = [];
-var spacing = resolution / (20);
+var spacing = resolution / (30);
 
 var spider = [];
 
@@ -27,8 +27,8 @@ function setup() {
     var canvas = createCanvas(resolution, resolution);
     canvas.parent('sketch-holder');
 
-    for (let i = 0; i < 22; i++) {
-        ground.push(new create_ground(spacing * i, 1000, randomInt(resolution - 300, resolution), randomInt(resolution - 300, resolution)));
+    for (let i = 0; i < 32; i++) {
+        ground.push(new create_ground(spacing * i, 1000, randomInt(resolution - 100, resolution - 50), randomInt(resolution - 100, resolution - 50)));
     }
 
     spider.push(new create_spider(0, 0));
@@ -41,10 +41,14 @@ function setup() {
 function draw() {
     background(30)
 
-    let closest;
-    let minDistance = 1000;
+    let closest1;
+    let closest2;
+    let closest3;
+    let minDistance1 = 1000;
+    let minDistance2 = 1000;
+    let minDistance3 = 1000;
 
-    for (let i = 0; i < 22; i++) {
+    for (let i = 0; i < 32; i++) {
         stroke(color(137, 207, 240), 0, 0);
         strokeWeight(ground[i].width);
 
@@ -60,10 +64,23 @@ function draw() {
             Math.pow(ground[i].y_end - spider[0].y, 2)
         );
 
-        if (distance < minDistance) {
-            minDistance = distance;
-            closest = ground[i];
+        var closest1WasSet = false;
+        var closest2WasSet = false;
+        if (distance < minDistance1) {
+            minDistance1 = distance;
+            closest1 = ground[i];
+            closest1WasSet = true;
         }
+        if (distance < minDistance2 && closest1WasSet == false) {
+            minDistance2 = distance;
+            closest2 = ground[i];
+            closest2WasSet = true;
+        }
+        if (distance < minDistance3 && closest1WasSet == false && closest2WasSet == false) {
+            minDistance3 = distance;
+            closest3 = ground[i];
+        }
+
 
     }
 
@@ -73,7 +90,12 @@ function draw() {
     fill(color(137, 207, 240), 0, 0);
     rect(spider[0].x, spider[0].y, spider[0].width, spider[0].width);
 
-    line(spider[0].x, spider[0].y, closest.x_end, closest.y_end);
+    if (closest1 && closest2 && closest3) {
+        line(spider[0].x, spider[0].y, closest1.x_end, closest1.y_end);
+        line(spider[0].x, spider[0].y, closest2.x_end, closest2.y_end);
+        line(spider[0].x, spider[0].y, closest3.x_end, closest3.y_end);
+    }
+
 
 }
 
